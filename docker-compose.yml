@@ -1,0 +1,92 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./dramoir_backup.dump:/dramoir_backup.dump 
+    environment:
+      POSTGRES_USER: backend
+      POSTGRES_PASSWORD: 20201831m
+      POSTGRES_DB: movieseries
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U backend -d movieseries"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: backend
+    volumes:
+      - ./dramoir_backup.dump:/app/dramoir_backup.dump
+      - ./backend/.env:/app/.env
+    command: >
+      bash -c "while ! pg_isready -h db -U backend -d movieseries; do sleep 2; done
+      && python manage.py migrate
+      && python create_superuser.py
+      && gunicorn MovieSeries.wsgi:application --bind 0.0.0.0:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+      - frontend
+
+
+  restore_data:
+    image: postgres:15-alpine
+    container_name: restore_data
+    depends_on:
+      - backend
+      - db
+    volumes:
+      - ./dramoir_backup.dump:/dramoir_backup.dump
+    environment:
+      PGPASSWORD: 20201831m
+    command: |
+      sh -c '
+        echo "⏳ Waiting for DB...";
+        until pg_isready -h db -U backend -d movieseries; do sleep 2; done;
+        echo "✅ Restoring only movie/series/review data...";
+        pg_restore --data-only --disable-triggers --no-owner --no-acl \
+          -t movie_movie -t movie_country -t movie_downloadfile \
+          -t movie_episode -t movie_genre -t movie_language -t movie_movie_countries -t movie_movie_crews -t movie_movie_genres \
+          -t movie_season -t movie_series_countries -t movie_series_genres -t movie_series_languages -t movie_shortdescription \
+          -t movie_sitesetting -t movie_weeklyschedule -t review_comment \
+          -h db -U backend -d movieseries /dramoir_backup.dump;
+        echo "✅ Done."'
+    networks:
+      - backend
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    volumes:
+      - ./backend/static:/app/backend/static
+      - ./backend/media:/app/backend/media
+      - ./frontend/new:/var/www/frontend
+      - ./certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - frontend
+
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+networks:
+  backend:
+  frontend:
+

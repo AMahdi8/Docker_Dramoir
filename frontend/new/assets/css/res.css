@@ -1,0 +1,154 @@
+@media (min-width: 1200px) {
+
+    /* استایل‌های مربوط به دسکتاپ بزرگ */
+    .nav-mg {
+        margin: 0 30px;
+    }
+
+    .d-md-flex2 {
+        display: flex;
+    }
+
+    .h-sm {
+        font-size: 30px;
+    }
+
+    .spanb-sm {
+        font-size: 20px;
+    }
+    .swiper{
+        height: 220px;
+    }
+   
+    .all{
+        font-size: 15px;
+    }
+.swiper, .swiper-wrapper, .first-slide{
+    height: 400px;
+    width: 100%;
+}
+.detail button{
+    right: 250px;
+    top:150px ;
+}
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    /* استایل‌های مربوط به دسکتاپ متوسط */
+    .nav-mg {
+        margin: 0 20px;
+    }
+
+    .h-sm {
+        font-size: 25px;
+    }
+
+    .spanb-sm {
+        font-size: 20px;
+    }
+    .span-sm {
+        font-size:20px;
+    }
+    .swiper{
+        height: 260px;
+    }
+  
+    .all{
+        font-size: 15px;
+    }
+    .res-float{
+        float: left;
+      }
+      .swiper, .swiper-wrapper, .first-slide{
+        height: 400px;
+        width: 100%;
+    }
+    .detail button{
+        right:250px ;
+        top:150px ;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    /* استایل‌های مربوط به دسکتاپ کوچک */
+    .nav-mg {
+        margin: 0 8px;
+    }
+
+    .h-sm {
+        font-size: 25px;
+    }
+
+    .spanb-sm {
+        font-size: 20px;
+    }
+    .span-sm {
+        font-size: 25px;
+    }
+    .swiper{
+        height: 300px;
+    }
+  
+    .all{
+        font-size: 20px;
+    }
+    .res-float{
+        float: right;
+        margin-top: 10px;
+      }
+      .swiper, .swiper-wrapper, .first-slide{
+        height: 300px;
+        width: 100%;
+    }
+    .detail button{
+        right: 200px;
+        top:100px ;
+    } 
+}
+
+@media (max-width: 767px) {
+
+    /* استایل‌های مربوط به تبلت و موبایل */
+    .nav-mg {
+        margin: 0 5px;
+    }
+
+    .d-md-flex2 {
+        display: none !important;
+    }
+
+    .h-sm {
+        font-size: 20px;
+    }
+
+    .spanb-sm {
+        font-size: 15px;
+    }
+    .span-sm {
+        font-size: 15px;
+    }
+  
+    .all{
+        font-size: 12px;
+    }
+    .res-float{
+        float: right;
+        margin-top: 10px;
+      }
+      .swiper, .swiper-wrapper, .first-slide{
+        height: 300px;
+        width: 100%;
+    }
+    .detail button{
+        right:100px ;
+        top:140px ;
+    }
+    .mj-10{
+        
+    }
+    .movie-title{
+       
+    }
+}

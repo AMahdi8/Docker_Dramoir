@@ -1,0 +1,156 @@
+from django.http import HttpResponseRedirect
+from django.db.models import F, Max, Subquery, OuterRef, Q
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.exceptions import NotFound, PermissionDenied
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import RetrieveModelMixin, ListModelMixin
+from itsdangerous import BadSignature, SignatureExpired  # type: ignore
+from django.utils.timezone import now
+from datetime import timedelta
+from random import sample
+
+
+from .models import Country, DownloadFile, Genre, Language, Movie, Series
+from .serializers import CountrySerializer, GenreSerializer, LanguageSerializer, MovieDetailSerializer, MovieListSerializer, SeriesDetailSerializer, SeriesListSerializer
+from .utilities import get_movies_and_series_by_country
+class HomePageViewSet(ViewSet):
+    
+    @action(detail=False, methods=['get'])
+    def recent_highest_rated(self, request):
+        choosen_movies = Movie.objects.filter(choosen_home_page=True)
+        choosen_series = Series.objects.filter(choosen_home_page=True)
+
+        return Response({
+            "movies": MovieListSerializer(choosen_movies, many=True).data,
+            "series": MovieListSerializer(choosen_series, many=True).data
+        })
+
+    @action(detail=False, methods=['get'])
+    def korean_content(self, request):
+        korean_movies, korean_series = get_movies_and_series_by_country('South Korea')
+        return Response({
+            "movies": MovieListSerializer(korean_movies, many=True).data,
+            "series": MovieListSerializer(korean_series, many=True).data
+        })
+
+    @action(detail=False, methods=['get'])
+    def chinese_content(self, request):
+        chinese_movies, chinese_series = get_movies_and_series_by_country('China')
+        return Response({
+            "movies": MovieListSerializer(chinese_movies, many=True).data,
+            "series": MovieListSerializer(chinese_series, many=True).data
+        })
+
+    @action(detail=False, methods=['get'])
+    def turkish_content(self, request):
+        turkish_movies, turkish_series = get_movies_and_series_by_country('Turkey')
+        return Response({
+            "movies": MovieListSerializer(turkish_movies, many=True).data,
+            "series": MovieListSerializer(turkish_series, many=True).data
+        })
+
+    @action(detail=False, methods=['get'])
+    def other_content(self, request):
+        other_movies = Movie.objects.exclude(
+            countries__name__in=["South Korea", "China", "Turkey"]
+        ).filter(choosen_country=True)
+
+        other_series = Series.objects.exclude(
+            countries__name__in=["South Korea", "China", "Turkey"]
+        ).filter(choosen_country=True)
+
+        other_random_movies = sample(list(other_movies), min(len(other_movies), 3))
+        other_random_series = sample(list(other_series), min(len(other_series), 3))
+
+        return Response({
+            "movies": MovieListSerializer(other_random_movies, many=True).data,
+            "series": MovieListSerializer(other_random_series, many=True).data
+        })
+
+class SearchView(APIView):
+    def get(self, request):
+        query = request.query_params.get('q', '').strip()
+        if not query:
+            return Response({"results": []})
+
+        movies = Movie.objects.filter(title__icontains=query)
+
+        series = Series.objects.filter(title__icontains=query)
+
+        movie_serializer = MovieListSerializer(movies, many=True)
+        series_serializer = SeriesListSerializer(series, many=True)
+
+        results = {
+            "movies": movie_serializer.data,
+            "series": series_serializer.data
+        }
+
+        return Response(results)
+
+
+class MovieViewSet(ListModelMixin,
+                   RetrieveModelMixin,
+                   GenericViewSet):
+    queryset = Movie.objects.prefetch_related(
+        'countries', 'languages', 'genres', 'download_urls'
+    ).annotate(
+        highest_quality=Subquery(
+            DownloadFile.objects.filter(movie=OuterRef('pk'))
+            .order_by('source', '-quality')
+            .values('quality')[:1]
+        ),
+        highest_source=Subquery(
+            DownloadFile.objects.filter(movie=OuterRef('pk'))
+            .order_by('source', '-quality')
+            .values('source')[:1]
+        )
+    )
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return MovieListSerializer
+        return MovieDetailSerializer
+
+
+class SeriesViewSet(ListModelMixin,
+                    RetrieveModelMixin,
+                    GenericViewSet):
+
+    def get_queryset(self):
+        if self.action == 'list':
+            return Series.objects.prefetch_related(
+                'countries', 'languages', 'genres').all()
+        return Series.objects.prefetch_related(
+            'countries', 'languages', 'genres',
+            'seasons', 'seasons__episodes',
+            'seasons__episodes__download_urls').all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return SeriesListSerializer
+        return SeriesDetailSerializer
+
+
+class CountryViewSet(RetrieveModelMixin,
+                     GenericViewSet):
+    queryset = Country.objects.prefetch_related(
+        'series', 'movies').all()
+    serializer_class = CountrySerializer
+    lookup_field = 'name'
+
+
+class LanguageViewSet(RetrieveModelMixin,
+                      GenericViewSet):
+    queryset = Language.objects.prefetch_related(
+        'series', 'movies').all()
+    serializer_class = LanguageSerializer
+    lookup_field = 'name'
+
+
+class GenreViewSet(RetrieveModelMixin,
+                   GenericViewSet):
+    queryset = Genre.objects.prefetch_related(
+        'series', 'movies').all()
+    serializer_class = GenreSerializer
+    lookup_field = 'name'

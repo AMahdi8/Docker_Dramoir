@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <title>ویکی دراما</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA Compatibel" content="IE" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.rtl.min.css">
+
+    <link rel="stylesheet" href="assets/css/all.css">
+    <link rel="stylesheet" href="assets/css/res.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineMax.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Ultra&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <div class="set-inset">
+        <nav style="box-shadow: 1px 1px 10px #571c27;" class="light-mc header-color">
+            <div class=" d-md-none d-block">
+                <input type="checkbox" name="" id="inputTag">
+                <div class="move">
+                    <h1 class="bebas-neue-regular"> Viki Drama</h1>
+                </div>
+                <label for="inputTag" class="hamb " style="top: 20px;">
+                    <span class="top light-mb"></span>
+                    <span class="middel light-mb"></span>
+                    <span class="bottom light-mb"></span>
+
+                </label>
+                <div class="search-bar-container  active ">
+                    <img src="assets/images/search-interface-symbol.png" class="magnifier set-filter" />
+                    <input type="text" class="input" placeholder="جستجو کنید ..." />
+
+                </div>
+                <span id="search-message1"></span>
+                <ul class="sidebar back-side"
+                    style="z-index: 20;background-color: rgb(252,237,237);box-shadow:1px 1px 10px #fd7970;padding:60px 10px 0 0 ;text-align: start;">
+
+                    <ul class="menu">
+                        <li>
+                            <div class="menu-item dark-mc" onclick="toggleSubmenu(this)"><i
+                                    class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+
+                                سریال ها</div>
+                            <ul id="submenu1">
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="menu">
+                        <li>
+                            <div class="menu-item dark-mc" onclick="toggleSubmenu(this)"><i
+                                    class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+                                فیلم ها</div>
+                            <ul id="submenu2">
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="menu">
+                        <a href="https://t.me/Arian_1">
+                            <li>
+                                <div class="menu-item dark-mc"><img src="phone.png" width="16px" class="invert-color">
+                                    ارتباط با ما</div>
+                            </li>
+                        </a>
+                    </ul>
+
+                    <ul class="menu">
+                        <li>
+
+                            <div class="menu-item dark-mc"><img src="home.png" width="20px" class="invert-color">
+                                خانه</div>
+                        </li>
+                    </ul>
+
+
+                </ul>
+            </div>
+            <div style="padding: 15px 130px;">
+                <ul class="nav-options d-md-flex d-none">
+                    <div class="dropdown">
+                        <button class="dropbtn"> <span class="dot2" style="top: 5px;">•</span> سریال ها</button>
+                        <div class="dropdown-content" id="dropdown-content1">
+
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn"> <span class="dot2" style="top: 5px;">•</span> فیلم ها</button>
+                        <div class="dropdown-content" id="dropdown-content2">
+
+                        </div>
+                    </div>
+                    <a href="https://t.me/Arian_1" style="color: #f8f4f3;">
+                        <li class="nav-mg cursor-p"><span class="dot">•</span> ارتباط با ما
+                        </li>
+                    </a>
+                    <a href="#" style="color: #f8f4f3;">
+                        <li class="nav-mg cursor-p"><span class="dot">•</span> خانه
+                        </li>
+                    </a>
+
+                </ul>
+                <button id="theme-switch" class="mode-button">
+                    <img src="assets/images/moon.png" width="24px" id="my-moon"
+                        style=" filter: brightness(0) invert(1)" />
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                        <path
+                            d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Z" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <span id="search-message1"></span>
+        <!--section 1-->
+        <br>
+        <div class="swiper mySwiper d-sm-none d-block">
+            <div class="swiper-wrapper " style="padding: 0;" id="swiper">
+
+            </div>
+
+            <div class="swiper-pagination" style="padding: 0;"></div>
+        </div>
+        <section style="justify-content: center;" class="d-sm-flex d-none">
+            <div style="width: 90%;">
+
+
+                <swiper-container id="poster" style="--swiper-navigation-color: #fff; --swiper-navigation-size:40px; "
+                    class="mySwiper" navigation="true" space-between="10" loop="true" slides-per-view="2"
+                    keyboard="true" mousewheel="true" breakpoints='{
+                        "576": {
+                            "slidesPerView": 2,
+                            "spaceBetween": 10
+                          },
+                    "1100": {
+                      "slidesPerView": 3,
+                      "spaceBetween": 20
+                    },
+                    "1400": {
+                      "slidesPerView": 4,
+                      "spaceBetween": 0
+                    }
+                  }'>
+
+
+                </swiper-container>
+            </div>
+        </section>
+        <br>
+        <br>
+        <section class="input-sec">
+            <div class="search row">
+
+                <div class="col-12 col-md-10 " style="position: relative;">
+
+                    <img src="assets/images/search.png" style="width: 20px; " class="input-mag">
+                    <input type="text" placeholder="اسم فیلم یا سریال مدنظر خود را وارد کنید" class="sec-search"
+                        data-search>
+                </div>
+                <div class="col-6 col-md-1 btns">
+                    <button class="delete-btn dark-mc ">حذف </button>
+                </div>
+                <div class="col-6 col-md-1 btns">
+                    <a href="#"> <button class="search-btn"> جستجو</button> </a>
+                </div>
+
+            </div>
+
+        </section>
+        <span id="search-message"></span>
+        <br><br>
+        <div class="header-sec mx-auto" id="headerSec1">
+
+        </div>
+        <section class="bg-gray-50 " id="sec1">
+            <div class="mx-auto new-series  py-12 ">
+
+                <br><br>
+                <div class=" mt-8 lg:col-span-2 lg:mx-0">
+                    <swiper-container id="keen-slider" class="mySwiper" space-between="0" slides-per-view="2.5"
+                        breakpoints='{
+                            "500": {
+                                "slidesPerView": 3.5,
+                                "spaceBetween": 10
+                              },  
+                      "700": {
+                        "slidesPerView": 4.5,
+                        "spaceBetween": 10
+                      },
+                      "1200": {
+                        "slidesPerView": 6,
+                        "spaceBetween": 20
+                      }
+                    }'>
+
+                    </swiper-container>
+                </div>
+            </div>
+
+        </section>
+        <br><br>
+        <div class="header-sec mx-auto" id="headerSec2">
+
+        </div>
+        <section class="bg-gray-50 " id="sec2">
+            <div class="mx-auto new-series  py-12 ">
+
+                <br><br>
+                <div class="-mx-6 mt-8 lg:col-span-2 lg:mx-0">
+                    <swiper-container id="keen-slider2" class="mySwiper" space-between="0" slides-per-view="2.5"
+                        breakpoints='{
+                        "500": {
+                            "slidesPerView": 3.5,
+                            "spaceBetween": 10
+                          },  
+                  "700": {
+                    "slidesPerView": 4.5,
+                    "spaceBetween": 10
+                  },
+                  "1200": {
+                    "slidesPerView": 6,
+                    "spaceBetween": 20
+                  }
+                }'>
+
+                    </swiper-container>
+
+                </div>
+            </div>
+
+        </section>
+        <br><br>
+        <div class="header-sec mx-auto" id="headerSec5">
+        </div>
+        <section class="row movie-sec" id="sec3">
+
+            <br><br><br><br><br>
+            <div class="movie-sec d-xl-flex d-none" id="slider1">
+
+            </div>
+
+            <div class="d-xl-none d-block">
+                <swiper-container id="keen-slider5" class="mySwiper" space-between="15" slides-per-view="2" breakpoints='{
+                      "600": {
+                        "slidesPerView": 3,
+                        "spaceBetween": 15
+                      },
+                      "850": {
+                        "slidesPerView": 4,
+                        "spaceBetween": 25
+                      },
+                      "1000": {
+                        "slidesPerView": 5,
+                        "spaceBetween": 30
+                      }
+                    }'>
+                </swiper-container>
+            </div>
+
+        </section>
+
+        <br><br>
+        <div class="header-sec mx-auto" id="headerSec3">
+
+        </div>
+        <section class="bg-gray-50 " id="sec4">
+            <div class="mx-auto new-series  py-12 ">
+
+                <br><br>
+                <div class="-mx-6 mt-8 lg:col-span-2 lg:mx-0">
+                    <swiper-container id="keen-slider3" class="mySwiper" space-between="0" slides-per-view="2.5"
+                        breakpoints='{
+                        "500": {
+                            "slidesPerView": 3.5,
+                            "spaceBetween": 10
+                          },  
+                  "700": {
+                    "slidesPerView": 4.5,
+                    "spaceBetween": 10
+                  },
+                  "1200": {
+                    "slidesPerView": 6,
+                    "spaceBetween": 20
+                  }
+                }'>
+
+                    </swiper-container>
+                </div>
+            </div>
+
+        </section>
+        <br><br>
+        <div class="header-sec mx-auto " id="headerSec4">
+
+        </div>
+        <section class="bg-gray-50 " id="sec5">
+            <div class="mx-auto new-series  py-12 ">
+
+                <br><br>
+                <div class="-mx-6 mt-8 lg:col-span-2 lg:mx-0">
+                    <swiper-container id="keen-slider4" class="mySwiper" space-between="0" slides-per-view="2.5"
+                        breakpoints='{
+                        "500": {
+                            "slidesPerView": 3.5,
+                            "spaceBetween": 10
+                          },  
+                  "700": {
+                    "slidesPerView": 4.5,
+                    "spaceBetween": 10
+                  },
+                  "1200": {
+                    "slidesPerView": 6,
+                    "spaceBetween": 20
+                  }
+                }'>
+
+                    </swiper-container>
+                </div>
+            </div>
+
+        </section>
+        <br><br>
+        <div class="header-sec mx-auto" id="headerSec6">
+        </div>
+        <section class="row movie-sec" id="sec6">
+
+            <br><br> <br><br><br>
+            <div class="movie-sec d-xl-flex d-none" id="slider2">
+            </div>
+            <div class="d-xl-none d-block" style="padding: 0;">
+                <swiper-container id="keen-slider6" class="mySwiper" space-between="15" slides-per-view="2" breakpoints='{
+                      "600": {
+                        "slidesPerView": 3,
+                        "spaceBetween": 15
+                      },
+                      "850": {
+                        "slidesPerView": 4,
+                        "spaceBetween": 25
+                      },
+                      "1000": {
+                        "slidesPerView": 5,
+                        "spaceBetween": 30
+                      }
+                    }'>
+                </swiper-container>
+            </div>
+        </section>
+
+        <br><br>
+        <footer>
+            <div class="row">
+                <div class="col-12 footer">
+                </div>
+                <div class="col-12  footer">
+                    <div class="telegram">
+                        <a href="https://t.me/Dramoir">
+                            <div style="display: inline;">
+                                <i class="fa-brands fa-telegram" style="font-size: 40px;"></i>
+                            </div>
+                            <div class="telegram-info">
+                                <span>عضویت در کانال تلگرام</span><br>
+                                <span style="opacity: .7;">telegram</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mx-auto mt-4 d-flex justify-content-center">
+                        <span style="font-size: 13px;color: rgb(125,125,125,.8);cursor: none;">
+                            تمامی حقوق این سایت متعلق به مجموعه ویکی دراما می باشد.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+       
+        <br><br>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/jquery-1.11.0.min.js"></script>
+
+        <script src="assets/js/swiper-bundle.min.js"></script>
+
+        <script src="assets/js/swiper-element-bundle.min.js"></script>
+        <script src="assets/js/index.js"></script>
+
+    </div>
+</body>
+
+</html>
